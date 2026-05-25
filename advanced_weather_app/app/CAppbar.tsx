@@ -36,7 +36,7 @@ export default function CAppbar() {
     coords,
     weatherData,
     loading,
-  } = useLocation();
+  } = useLocation(selectedCoords);
 
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
@@ -90,11 +90,16 @@ export default function CAppbar() {
         >
           <Icon source="magnify" color="#534DB3" size={20} />
           <CTextInput
-            onBlur={(e: any) => {
-              setLocation(address);
+            onBlur={() => {
               setVisible(false);
-              // setLocation("");
-              setErrorMessage("Location not found.");
+
+              if (address.trim() && placesList.length === 0) {
+                setLocation("");
+                setErrorMessage("Location not found.");
+              } else
+                setLocation(
+                  `${placesList[0].name}, ${placesList[0].admin1}, ${placesList[0].country}`,
+                );
             }}
             onChangeText={(text: string) => {
               setAddress(text);
@@ -130,7 +135,7 @@ export default function CAppbar() {
             setErrorMessage("");
             setVisible(false);
           }}
-          style={{ transform: "rotate(45deg);" }}
+          style={{ transform: [{ rotate: "45deg" }] }}
         />
       </Appbar.Header>
       <View
