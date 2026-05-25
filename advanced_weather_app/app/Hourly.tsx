@@ -33,6 +33,7 @@ const HourlyData = ({ hourly }: HourlyProps) => {
         overflow: "scroll",
         width: "100%",
         height: "100%",
+        backgroundColor: "transparent",
       }}
     >
       <View
@@ -42,6 +43,7 @@ const HourlyData = ({ hourly }: HourlyProps) => {
           width: "100%",
           gap: 10,
           padding: 10,
+          backgroundColor: "transparent",
         }}
       >
         {!!hourly.length &&
@@ -74,6 +76,7 @@ const HourlyData = ({ hourly }: HourlyProps) => {
                     flexDirection: "row",
                     justifyContent: "center",
                     alignItems: "center",
+                    backgroundColor: "transparent",
                   }}
                 >
                   <Icon source="weather-windy" size={15} color="gray"></Icon>

@@ -32,6 +32,7 @@ const DailyData = ({ weekly }: DailyProps) => {
         overflow: "scroll",
         width: "100%",
         height: "100%",
+        backgroundColor: "transparent",
       }}
     >
       <View
@@ -41,6 +42,7 @@ const DailyData = ({ weekly }: DailyProps) => {
           width: "100%",
           gap: 10,
           padding: 10,
+          backgroundColor: "transparent",
         }}
       >
         {!!weekly.length &&

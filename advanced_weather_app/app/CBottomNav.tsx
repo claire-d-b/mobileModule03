@@ -48,6 +48,7 @@ const CurrRoute = ({ location, data }: RouteProps) => (
       justifyContent: "center",
       alignItems: "center",
       gap: 20,
+      backgroundColor: "transparent",
     }}
   >
     <Text>Currently</Text>
@@ -92,6 +93,7 @@ const TodayRoute = ({
       justifyContent: "center",
       alignItems: "center",
       gap: 20,
+      backgroundColor: "transparent",
     }}
   >
     <Text>Today</Text>
@@ -102,6 +104,7 @@ const TodayRoute = ({
         width: "100%",
         height: "100%",
         overflow: "scroll",
+        backgroundColor: "transparent",
       }}
     >
       <Text>{location}</Text>
@@ -112,6 +115,7 @@ const TodayRoute = ({
           borderRadius: 20,
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "transparent",
         }}
       >
         <LineChart
@@ -154,6 +158,7 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
       justifyContent: "center",
       alignItems: "center",
       gap: 20,
+      backgroundColor: "transparent",
     }}
   >
     <Text>Weekly</Text>
@@ -164,6 +169,7 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
         width: "100%",
         height: "100%",
         overflow: "scroll",
+        backgroundColor: "transparent",
       }}
     >
       <Text>{location}</Text>
@@ -174,6 +180,7 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
           borderRadius: 20,
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "transparent",
         }}
       >
         <LineChart
@@ -299,6 +306,7 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "transparent",
           }}
         >
           <Text>{message}</Text>
@@ -320,6 +328,7 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "transparent",
           }}
         >
           <Text>{message}</Text>
@@ -341,6 +350,7 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "transparent",
           }}
         >
           <Text>{message}</Text>
@@ -358,6 +368,13 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
       activeIndicatorStyle={{ backgroundColor: "#534DB3" }}
       barStyle={{ backgroundColor: "#534DB3" }}
       style={style}
+      theme={{
+        colors: {
+          secondaryContainer: "transparent",
+          background: "transparent",
+          surface: "transparent",
+        },
+      }}
     />
   );
 };

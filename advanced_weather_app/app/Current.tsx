@@ -25,6 +25,7 @@ const CurrentData = ({ location, data }: CurrentProps) => {
         padding: 20,
         gap: 10,
         width: "100%",
+        backgroundColor: "transparent",
       }}
     >
       <Text>{location}</Text>
@@ -45,6 +46,7 @@ const CurrentData = ({ location, data }: CurrentProps) => {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "transparent",
         }}
       >
         <Icon source="weather-windy" size={15} color="gray"></Icon>

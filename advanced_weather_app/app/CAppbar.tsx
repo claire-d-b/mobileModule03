@@ -1,6 +1,11 @@
 import * as Location from "expo-location";
 import React, { useState, useEffect, use } from "react";
-import { View, ActivityIndicator, BlurEvent } from "react-native";
+import {
+  View,
+  ActivityIndicator,
+  BlurEvent,
+  ImageBackground,
+} from "react-native";
 import { Appbar, Text, IconButton, Icon, Menu } from "react-native-paper";
 import { evaluate } from "mathjs";
 import CTextInput from "./CTextInput";
@@ -50,17 +55,13 @@ export default function CAppbar() {
   }, [address]); // also changed to depend on location, not address
 
   return (
-    <View
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
+    <ImageBackground
+      source={require("../assets/wallpaper.png")}
+      style={{ width: "100%", height: "100%", flexDirection: "column" }}
+      resizeMode="cover"
     >
       <Appbar.Header
         style={{
-          backgroundColor: "#534DB3",
           padding: 0,
           margin: 5,
           width: "100%",
@@ -68,6 +69,7 @@ export default function CAppbar() {
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
+          backgroundColor: "transparent",
         }}
       >
         <View
@@ -76,9 +78,10 @@ export default function CAppbar() {
             flexDirection: "row",
             justifyContent: "flex-start",
             alignItems: "center",
+            backgroundColor: "transparent",
           }}
         >
-          <Icon source="magnify" color="white" size={20} />
+          <Icon source="magnify" color="#534DB3" size={20} />
           <CTextInput
             onBlur={(e: any) => {
               setLocation(address);
@@ -91,7 +94,7 @@ export default function CAppbar() {
               setVisible(true);
               setErrorMessage("");
             }}
-            textColor="white"
+            textColor="#534DB3"
             label="Location"
             msg={address}
             placeholder="Search location..."
@@ -99,7 +102,7 @@ export default function CAppbar() {
             outlineColor="white"
             activeOutlineColor="white"
             underlineColor="white"
-            activeUnderlineColor="white"
+            activeUnderlineColor="#534DB3"
             selectionColor="white"
             contentStyle={{}}
             style={{
@@ -112,7 +115,7 @@ export default function CAppbar() {
         </View>
         <IconButton
           icon="navigation"
-          iconColor="white"
+          iconColor="#534DB3"
           size={20}
           onPress={() => {
             setLocation(detectedAddress);
@@ -127,6 +130,7 @@ export default function CAppbar() {
         style={{
           width: "100%",
           height: "100%",
+          backgroundColor: "transparent",
         }}
       >
         <View
@@ -135,6 +139,7 @@ export default function CAppbar() {
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            backgroundColor: "transparent",
           }}
         >
           {visible &&
@@ -167,17 +172,6 @@ export default function CAppbar() {
                   </View>
                 );
             })}
-          {/* {errorMessage !== "" && (
-            <View
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Text>{errorMessage}</Text>
-            </View>
-          )} */}
           {!visible && (
             <CBottomNav
               message={errorMessage}
@@ -186,11 +180,12 @@ export default function CAppbar() {
               style={{
                 height: "100%",
                 paddingBottom: 40,
+                backgroundColor: "transparent",
               }}
             />
           )}
         </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
