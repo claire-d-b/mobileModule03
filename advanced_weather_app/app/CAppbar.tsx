@@ -99,11 +99,11 @@ export default function CAppbar() {
             msg={address}
             placeholder="Search location..."
             variant="flat"
-            outlineColor="white"
-            activeOutlineColor="white"
-            underlineColor="white"
+            outlineColor="#534DB3"
+            activeOutlineColor="#534DB3"
+            underlineColor="#534DB3"
             activeUnderlineColor="#534DB3"
-            selectionColor="white"
+            selectionColor="#534DB3"
             contentStyle={{}}
             style={{
               backgroundColor: "transparent",
