@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CProgressBar from "./CProgressBar";
-import { View, Pressable } from "react-native";
+import { View, Pressable, ScrollView } from "react-native";
 import { Text, Icon } from "react-native-paper";
 import getWeatherCode, { getWeatherIcons } from "./weatherCodes";
 import Slider from "@react-native-community/slider";
@@ -32,19 +32,14 @@ const HourlyData = ({ hourly }: HourlyProps) => {
         flexDirection: "column",
         overflow: "scroll",
         width: "100%",
-        height: "100%",
         backgroundColor: "transparent",
       }}
     >
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          gap: 10,
-          padding: 10,
-          backgroundColor: "transparent",
-        }}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ width: "100%", backgroundColor: "transparent" }}
+        contentContainerStyle={{ gap: 10, padding: 10 }}
       >
         {!!hourly.length &&
           hourly.map((h, i) => {
@@ -53,7 +48,6 @@ const HourlyData = ({ hourly }: HourlyProps) => {
                 key={`hourly_detailed_${i}`}
                 onPress={() => handlePress(i)}
                 style={{
-                  height: "100%",
                   justifyContent: "center",
                   backgroundColor: `rgba(60, 76, 103, 0.1)`,
                   padding: 5,
@@ -93,7 +87,7 @@ const HourlyData = ({ hourly }: HourlyProps) => {
               </Pressable>
             );
           })}
-      </View>
+      </ScrollView>
       <CProgressBar progress={progress} color={"#534DB3"} />
     </View>
   );
