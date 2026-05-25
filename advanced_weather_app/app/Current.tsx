@@ -1,0 +1,59 @@
+import { useState } from "react";
+import CProgressBar from "./CProgressBar";
+import { View, Pressable } from "react-native";
+import { Text, Icon } from "react-native-paper";
+import getWeatherCode, { getWeatherIcons } from "./weatherCodes";
+import Slider from "@react-native-community/slider";
+import { WeatherData } from "./CBottomNav";
+
+export const truncate = (str: string, maxLength: number = 10) =>
+  str.length > maxLength ? str.slice(0, maxLength) + "…" : str;
+
+interface CurrentProps {
+  location: string;
+  data: WeatherData | null;
+}
+
+const CurrentData = ({ location, data }: CurrentProps) => {
+  return (
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        gap: 10,
+        width: "100%",
+      }}
+    >
+      <Text>{location}</Text>
+      <Icon
+        source={getWeatherIcons(data?.current.weather_code)}
+        color="#534DB3"
+        size={40}
+      />
+      <Text style={{ color: "#534DB3", fontSize: 25 }}>
+        {getWeatherCode(data?.current.weather_code)}
+      </Text>
+      <Text style={{ color: "#534DB3", fontSize: 16, fontWeight: "bold" }}>
+        {data?.current.temperature_2m.toFixed(1)}°C
+      </Text>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Icon source="weather-windy" size={15} color="gray"></Icon>
+        <Text style={{ color: "gray" }}>
+          {data?.current.wind_speed_10m.toFixed(1)}km/h
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+export default CurrentData;
