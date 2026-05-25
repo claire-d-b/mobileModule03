@@ -37,11 +37,18 @@ export default function CAppbar() {
     weatherData,
     loading,
   } = useLocation();
+
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [placesList, setPlacesList] = useState<Place[]>([]);
   const [visible, setVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (detectedAddress && location === "") {
+      setLocation(detectedAddress);
+    }
+  }, [detectedAddress]);
 
   useEffect(() => {
     const fetchPlaces = async () => {

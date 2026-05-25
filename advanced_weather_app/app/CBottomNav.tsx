@@ -295,7 +295,7 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
 
   const renderScene = BottomNavigation.SceneMap({
     currently: () =>
-      message === "" ? (
+      message === "" && location && weatherData ? (
         <CurrRoute location={location} data={weatherData} />
       ) : (
         <View
@@ -313,7 +313,7 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
         </View>
       ),
     today: () =>
-      message === "" ? (
+      message === "" && location && weatherData ? (
         <TodayRoute
           location={location}
           todayHourly={todayHourly}
@@ -335,7 +335,7 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
         </View>
       ),
     weekly: () =>
-      message === "" ? (
+      message === "" && location && weatherData ? (
         <WeeklyRoute
           location={location}
           weekly={weekly}
