@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, PaperProvider } from "react-native-paper";
-import { View, ImageBackground } from "react-native";
+import { View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import CButton from "./CButton";
 import CAppbar from "./CAppbar";
@@ -10,7 +10,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        <CAppbar />
+        <SafeAreaView>
+          <CAppbar />
+        </SafeAreaView>
       </PaperProvider>
     </SafeAreaProvider>
   );
