@@ -96,10 +96,15 @@ export default function CAppbar() {
               if (address.trim() && placesList.length === 0) {
                 setLocation("");
                 setErrorMessage("Location not found.");
-              } else
+              } else {
                 setLocation(
                   `${placesList[0].name}, ${placesList[0].admin1}, ${placesList[0].country}`,
                 );
+                setSelectedCoords({
+                  latitude: placesList[0].latitude,
+                  longitude: placesList[0].longitude,
+                });
+              }
             }}
             onChangeText={(text: string) => {
               setAddress(text);
