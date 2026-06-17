@@ -27,7 +27,6 @@ const CurrentData = ({ location, data }: CurrentProps) => {
         backgroundColor: "transparent",
       }}
     >
-      <Text>{location}</Text>
       <Icon
         source={getWeatherIcons(data?.current.weather_code)}
         color="#534DB3"
