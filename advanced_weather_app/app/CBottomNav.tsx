@@ -1,11 +1,12 @@
 import * as React from "react";
-import { BottomNavigation, Text } from "react-native-paper";
+import { BottomNavigation, Text, Icon } from "react-native-paper";
 import { View, Dimensions } from "react-native";
-import getWeatherCode from "./weatherCodes";
+import getWeatherCode from "../functions/weatherCodes";
 import { LineChart } from "react-native-chart-kit";
 import HourlyData from "./Hourly";
 import DailyData from "./Daily";
 import CurrentData from "./Current";
+import CChip from "./CChip";
 
 export const truncate = (str: string, maxLength: number = 10) =>
   str.length > maxLength ? str.slice(0, maxLength) + "…" : str;
@@ -42,7 +43,7 @@ const CurrRoute = ({ location, data }: RouteProps) => (
   <View
     style={{
       width: "100%",
-      height: "100%",
+      // height: "100%",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -87,7 +88,7 @@ const TodayRoute = ({
   <View
     style={{
       width: "100%",
-      height: "100%",
+      // height: "100%",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -102,7 +103,6 @@ const TodayRoute = ({
         display: "flex",
         padding: 20,
         width: "100%",
-        height: "100%",
         overflow: "scroll",
         backgroundColor: "transparent",
       }}
@@ -152,7 +152,7 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
   <View
     style={{
       width: "100%",
-      height: "100%",
+      // height: "100%",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -161,18 +161,41 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
       backgroundColor: "transparent",
     }}
   >
-    <Text>Weekly</Text>
+    <CChip
+      mode="outlined"
+      onPress={() => {}}
+      label="Weekly"
+      textStyle={{}}
+      style={{
+        borderColor: "#534DB3", // ← directement dans style
+        borderWidth: 1,
+      }}
+      icon=""
+      disabled={true}
+    >
+      <Text style={{ color: "#534DB3" }}>Weekly</Text>
+    </CChip>
     <View
       style={{
         display: "flex",
-        padding: 20,
-        width: "100%",
-        height: "100%",
-        overflow: "scroll",
-        backgroundColor: "transparent",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <Text>{location}</Text>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+          paddingHorizontal: 40,
+        }}
+      >
+        <Icon source="map-marker-outline" color="#534DB3" size={25} />
+        <Text style={{ padding: 20, color: "#534DB3" }}>{location}</Text>
+      </View>
       <View
         style={{
           display: "flex",
@@ -217,8 +240,8 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
           }}
         />
       </View>
-      <DailyData weekly={weekly} />
     </View>
+    <DailyData weekly={weekly} />
   </View>
 );
 

@@ -2,8 +2,7 @@ import { useState } from "react";
 import CProgressBar from "./CProgressBar";
 import { View, Pressable } from "react-native";
 import { Text, Icon } from "react-native-paper";
-import getWeatherCode, { getWeatherIcons } from "./weatherCodes";
-import Slider from "@react-native-community/slider";
+import getWeatherCode, { getWeatherIcons } from "../functions/weatherCodes";
 import { WeatherData } from "./CBottomNav";
 
 export const truncate = (str: string, maxLength: number = 10) =>

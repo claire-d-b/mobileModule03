@@ -1,17 +1,10 @@
 import * as Location from "expo-location";
 import React, { useState, useEffect, use } from "react";
-import {
-  View,
-  ActivityIndicator,
-  BlurEvent,
-  ImageBackground,
-} from "react-native";
+import { View, ImageBackground } from "react-native";
 import { Appbar, Text, IconButton, Icon, Menu } from "react-native-paper";
-import { evaluate } from "mathjs";
 import CTextInput from "./CTextInput";
 import CBottomNav from "./CBottomNav";
-import { useLocation, getPlacesList, getLocationName } from "./useLocation";
-import getForecasts from "./ensemble";
+import { useLocation, getPlacesList } from "../hooks/useLocation";
 
 interface Place {
   name: string;
@@ -196,7 +189,7 @@ export default function CAppbar() {
               weatherData={weatherData}
               style={{
                 height: "100%",
-                paddingBottom: 40,
+                paddingBottom: 60,
                 backgroundColor: "transparent",
               }}
             />

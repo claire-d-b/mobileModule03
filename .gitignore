@@ -1,1 +1,6 @@
 advanced_weather_app/node_modules
+advanced_weather_app/package-lock.json
+advanced_weather_app/tsconfig.json
+advanced_weather_app/app.json
+advanced_weather_app/.expo
+advanced_weather_app/android
