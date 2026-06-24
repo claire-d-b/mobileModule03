@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BottomNavigation, Text, Icon } from "react-native-paper";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, ScrollView } from "react-native";
 import getWeatherCode from "../functions/weatherCodes";
 import { LineChart } from "react-native-chart-kit";
 import HourlyData from "./Hourly";
@@ -40,17 +40,14 @@ interface RouteProps {
 }
 
 const CurrRoute = ({ location, data }: RouteProps) => (
-  <View
-    style={{
-      width: "100%",
-      // height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
+  <ScrollView
+    style={{ width: "100%", backgroundColor: "transparent" }}
+    contentContainerStyle={{
       alignItems: "center",
+      justifyContent: "center",
       gap: 20,
-      backgroundColor: "transparent",
-      paddingTop: 40,
+      paddingTop: 20,
+      paddingBottom: 20,
     }}
   >
     <CChip
@@ -81,7 +78,7 @@ const CurrRoute = ({ location, data }: RouteProps) => (
       <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
     </View>
     <CurrentData location={location} data={data} />
-  </View>
+  </ScrollView>
 );
 
 interface TodayRouteProps {
@@ -112,17 +109,14 @@ const TodayRoute = ({
   todayHourly,
   chartConfig,
 }: TodayRouteProps) => (
-  <View
-    style={{
-      width: "100%",
-      // height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
+  <ScrollView
+    style={{ width: "100%", backgroundColor: "transparent" }}
+    contentContainerStyle={{
       alignItems: "center",
+      justifyContent: "center",
       gap: 20,
-      backgroundColor: "transparent",
-      paddingTop: 40,
+      paddingTop: 20,
+      paddingBottom: 20,
     }}
   >
     <CChip
@@ -198,21 +192,18 @@ const TodayRoute = ({
       </View>
       <HourlyData hourly={todayHourly} />
     </View>
-  </View>
+  </ScrollView>
 );
 
 const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
-  <View
-    style={{
-      width: "100%",
-      // height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
+  <ScrollView
+    style={{ width: "100%", backgroundColor: "transparent" }}
+    contentContainerStyle={{
       alignItems: "center",
+      justifyContent: "center",
       gap: 20,
-      backgroundColor: "transparent",
-      paddingTop: 40,
+      paddingTop: 20,
+      paddingBottom: 20,
     }}
   >
     <CChip
@@ -296,7 +287,7 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
       </View>
     </View>
     <DailyData weekly={weekly} />
-  </View>
+  </ScrollView>
 );
 
 interface Props {
