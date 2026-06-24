@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, PaperProvider } from "react-native-paper";
+import { Text, PaperProvider, MD3LightTheme } from "react-native-paper";
 import { View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import CButton from "./CButton";
@@ -10,7 +10,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={["bottom", "left", "right"]}>
-        <PaperProvider>
+        <PaperProvider theme={MD3LightTheme}>
           <CAppbar />
         </PaperProvider>
       </SafeAreaView>
