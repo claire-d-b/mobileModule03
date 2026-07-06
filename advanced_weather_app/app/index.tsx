@@ -1,6 +1,7 @@
 import React from "react";
 import { PaperProvider, MD3LightTheme } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { ImageBackground } from "react-native";
 import CAppbar from "./CAppbar";
 
 const _ = () => {
@@ -11,7 +12,13 @@ const _ = () => {
         edges={["top", "bottom", "left", "right"]}
       >
         <PaperProvider theme={MD3LightTheme}>
-          <CAppbar />
+          <ImageBackground
+            source={require("../assets/wallpaper.png")}
+            resizeMode="cover"
+            style={{ flex: 1 }}
+          >
+            <CAppbar />
+          </ImageBackground>
         </PaperProvider>
       </SafeAreaView>
     </SafeAreaProvider>
