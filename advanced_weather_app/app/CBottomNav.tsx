@@ -6,7 +6,6 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
-import { getWeatherCode, getWeatherIcons } from "../functions/weatherCodes";
 import { LineChart } from "react-native-chart-kit";
 import HourlyData from "./Hourly";
 import DailyData from "./Daily";

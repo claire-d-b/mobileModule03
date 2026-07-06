@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { View, Pressable } from "react-native";
+import { View } from "react-native";
 import { Text, Icon } from "react-native-paper";
 import { getWeatherCode, getWeatherIcons } from "../functions/weatherCodes";
 import { WeatherData } from "../hooks/useLocation";
