@@ -1,8 +1,7 @@
 import { useState } from "react";
-import CProgressBar from "./CProgressBar";
 import { View, ScrollView } from "react-native";
 import { Text, Icon } from "react-native-paper";
-import getWeatherCode, { getWeatherIcons } from "../functions/weatherCodes";
+import { getWeatherCode, getWeatherIcons } from "../functions/weatherCodes";
 
 export const truncate = (str: string, maxLength: number = 10) =>
   str.length > maxLength ? str.slice(0, maxLength) + "…" : str;

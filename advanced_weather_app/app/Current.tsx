@@ -1,9 +1,8 @@
 import { useState } from "react";
-import CProgressBar from "./CProgressBar";
 import { View, Pressable } from "react-native";
 import { Text, Icon } from "react-native-paper";
-import getWeatherCode, { getWeatherIcons } from "../functions/weatherCodes";
-import { WeatherData } from "./CBottomNav";
+import { getWeatherCode, getWeatherIcons } from "../functions/weatherCodes";
+import { WeatherData } from "../hooks/useLocation";
 
 export const truncate = (str: string, maxLength: number = 10) =>
   str.length > maxLength ? str.slice(0, maxLength) + "…" : str;
@@ -36,7 +35,7 @@ const CurrentData = ({ location, data }: CurrentProps) => {
         {getWeatherCode(data?.current.weather_code)}
       </Text>
       <Text style={{ color: "#534DB3", fontSize: 16, fontWeight: "bold" }}>
-        {data?.current.temperature_2m.toFixed(1)}°C
+        {data?.current?.temperature_2m?.toFixed(1)}°C
       </Text>
       <View
         style={{
@@ -49,7 +48,7 @@ const CurrentData = ({ location, data }: CurrentProps) => {
       >
         <Icon source="weather-windy" size={15} color="gray"></Icon>
         <Text style={{ color: "gray" }}>
-          {data?.current.wind_speed_10m.toFixed(1)}km/h
+          {data?.current?.wind_speed_10m?.toFixed(1)}km/h
         </Text>
       </View>
     </View>

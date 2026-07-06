@@ -1,45 +1,55 @@
 import * as React from "react";
 import { BottomNavigation, Text, Icon } from "react-native-paper";
-import { View, Dimensions, ScrollView } from "react-native";
-import getWeatherCode from "../functions/weatherCodes";
+import {
+  View,
+  Dimensions,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
+import { getWeatherCode, getWeatherIcons } from "../functions/weatherCodes";
 import { LineChart } from "react-native-chart-kit";
 import HourlyData from "./Hourly";
 import DailyData from "./Daily";
 import CurrentData from "./Current";
 import CChip from "./CChip";
+import { WeatherData } from "../hooks/useLocation";
+import PagerView from "react-native-pager-view";
 
 export const truncate = (str: string, maxLength: number = 10) =>
   str.length > maxLength ? str.slice(0, maxLength) + "…" : str;
 
-// types.ts
-export interface WeatherData {
-  current: {
-    time: Date;
-    temperature_2m: number;
-    weather_code: number;
-    wind_speed_10m: number;
-  };
-  hourly: {
-    time: Date[];
-    temperature_2m: Float32Array | null;
-    weather_code: Float32Array | null;
-    wind_speed_10m: Float32Array | null;
-  };
-  daily: {
-    time: Date[];
-    temperature_2m_max: Float32Array | null;
-    temperature_2m_min: Float32Array | null;
-    weather_code: Float32Array | null;
-    wind_speed_10m_max: Float32Array | null;
-  };
-}
-
-interface RouteProps {
+interface CurrentRouteProps {
   location: string;
   data: WeatherData | null;
+  isLandscape: boolean;
 }
 
-const CurrRoute = ({ location, data }: RouteProps) => (
+interface TodayRouteProps {
+  location: string;
+  todayHourly: {
+    time: Date;
+    temperature_2m: number | undefined;
+    weather_code: number | undefined;
+    wind_speed_10m: number | undefined;
+  }[];
+  chartConfig: {};
+  isLandscape: boolean;
+}
+
+interface WeeklyRouteProps {
+  location: string;
+  weekly: {
+    time: Date;
+    temperature_2m_max: number | undefined;
+    temperature_2m_min: number | undefined;
+    weather_code: number | undefined;
+    wind_speed_10m_max: number | undefined;
+  }[];
+  chartConfig: {};
+  isLandscape: boolean;
+}
+
+const CurrRoute = ({ location, data, isLandscape }: CurrentRouteProps) => (
   <ScrollView
     style={{ width: "100%", backgroundColor: "transparent" }}
     contentContainerStyle={{
@@ -64,6 +74,11 @@ const CurrRoute = ({ location, data }: RouteProps) => (
     >
       <Text style={{ color: "#534DB3" }}>Currently</Text>
     </CChip>
+    {isLandscape && (
+      <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
+        Scroll down to display weather information.
+      </Text>
+    )}
     <View
       style={{
         display: "flex",
@@ -81,33 +96,11 @@ const CurrRoute = ({ location, data }: RouteProps) => (
   </ScrollView>
 );
 
-interface TodayRouteProps {
-  location: string;
-  todayHourly: {
-    time: Date;
-    temperature_2m: number | undefined;
-    weather_code: number | undefined;
-    wind_speed_10m: number | undefined;
-  }[];
-  chartConfig: {};
-}
-
-interface WeeklyRouteProps {
-  location: string;
-  weekly: {
-    time: Date;
-    temperature_2m_max: number | undefined;
-    temperature_2m_min: number | undefined;
-    weather_code: number | undefined;
-    wind_speed_10m_max: number | undefined;
-  }[];
-  chartConfig: {};
-}
-
 const TodayRoute = ({
   location,
   todayHourly,
   chartConfig,
+  isLandscape,
 }: TodayRouteProps) => (
   <ScrollView
     style={{ width: "100%", backgroundColor: "transparent" }}
@@ -133,10 +126,14 @@ const TodayRoute = ({
     >
       <Text style={{ color: "#534DB3" }}>Today</Text>
     </CChip>
+    {isLandscape && (
+      <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
+        Scroll down to display weather information.
+      </Text>
+    )}
     <View
       style={{
         display: "flex",
-        // padding: 20,
         width: "100%",
         overflow: "scroll",
         backgroundColor: "transparent",
@@ -177,7 +174,7 @@ const TodayRoute = ({
             ],
           }}
           chartConfig={chartConfig}
-          width={Dimensions.get("window").width - 20}
+          width={Dimensions.get("window").width - 60}
           height={220}
           withDots={false}
           hidePointsAtIndex={[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]}
@@ -195,7 +192,12 @@ const TodayRoute = ({
   </ScrollView>
 );
 
-const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
+const WeeklyRoute = ({
+  location,
+  weekly,
+  chartConfig,
+  isLandscape,
+}: WeeklyRouteProps) => (
   <ScrollView
     style={{ width: "100%", backgroundColor: "transparent" }}
     contentContainerStyle={{
@@ -220,6 +222,11 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
     >
       <Text style={{ color: "#534DB3" }}>Weekly</Text>
     </CChip>
+    {isLandscape && (
+      <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
+        Scroll down to display weather information.
+      </Text>
+    )}
     <View
       style={{
         display: "flex",
@@ -273,7 +280,7 @@ const WeeklyRoute = ({ location, weekly, chartConfig }: WeeklyRouteProps) => (
             ],
           }}
           chartConfig={chartConfig}
-          width={Dimensions.get("window").width - 20}
+          width={Dimensions.get("window").width - 60}
           height={220}
           withDots={false}
           yAxisSuffix="°C"
@@ -294,10 +301,14 @@ interface Props {
   message: string;
   location: string;
   weatherData: WeatherData | null;
-  style: {};
+  style?: {};
 }
 
-const CBottomNav = ({ message, location, weatherData, style }: Props) => {
+const _ = ({ message, location, weatherData, style }: Props) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+  const pagerRef = React.useRef<PagerView>(null);
+
   const today = new Date();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -332,8 +343,8 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
   };
 
   const todayHourly =
-    weatherData?.hourly.time
-      .map((time, i) => ({
+    weatherData?.hourly?.time
+      ?.map((time, i) => ({
         time,
         temperature_2m: weatherData.hourly.temperature_2m?.[i],
         weather_code: weatherData.hourly.weather_code?.[i],
@@ -363,8 +374,12 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
 
   const renderScene = BottomNavigation.SceneMap({
     currently: () =>
-      message === "" && location && weatherData ? (
-        <CurrRoute location={location} data={weatherData} />
+      message === "" ? (
+        <CurrRoute
+          location={location}
+          data={weatherData}
+          isLandscape={isLandscape}
+        />
       ) : (
         <View
           style={{
@@ -374,18 +389,18 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "transparent",
           }}
         >
           <Text>{message}</Text>
         </View>
       ),
     today: () =>
-      message === "" && location && weatherData ? (
+      message === "" ? (
         <TodayRoute
           location={location}
           todayHourly={todayHourly}
           chartConfig={chartConfig}
+          isLandscape={isLandscape}
         />
       ) : (
         <View
@@ -396,18 +411,18 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "transparent",
           }}
         >
           <Text>{message}</Text>
         </View>
       ),
     weekly: () =>
-      message === "" && location && weatherData ? (
+      message === "" ? (
         <WeeklyRoute
           location={location}
           weekly={weekly}
           chartConfig={chartConfig}
+          isLandscape={isLandscape}
         />
       ) : (
         <View
@@ -418,7 +433,6 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "transparent",
           }}
         >
           <Text>{message}</Text>
@@ -427,24 +441,41 @@ const CBottomNav = ({ message, location, weatherData, style }: Props) => {
   });
 
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-      activeColor="white"
-      inactiveColor="white"
-      activeIndicatorStyle={{ backgroundColor: "#534DB3" }}
-      barStyle={{ backgroundColor: "#534DB3" }}
-      style={style}
-      theme={{
-        colors: {
-          secondaryContainer: "transparent",
-          background: "transparent",
-          surface: "transparent",
-        },
-      }}
-    />
+    <View style={{ flex: 1 }}>
+      <PagerView
+        ref={pagerRef}
+        style={{ flex: 1 }}
+        initialPage={0}
+        onPageSelected={(e) => setIndex(e.nativeEvent.position)}
+      >
+        {routes.map((route) => (
+          <View key={route.key} style={{ flex: 1 }}>
+            {renderScene({
+              // routes.map(...) sert à transformer le tableau routes (3 objets de configuration d'onglets) en un tableau de composants React — un par onglet — pour que PagerView puisse les afficher côte à côte, dans des "pages" que l'utilisateur peut swiper.
+              route,
+              jumpTo: (key: string) => {
+                const newIndex = routes.findIndex((r) => r.key === key);
+                pagerRef.current?.setPageWithoutAnimation(newIndex);
+                setIndex(newIndex);
+              },
+            })}
+          </View>
+        ))}
+      </PagerView>
+      <BottomNavigation.Bar
+        navigationState={{ index, routes }}
+        onTabPress={({ route }) => {
+          const newIndex = routes.findIndex((r) => r.key === route.key);
+          pagerRef.current?.setPageWithoutAnimation(newIndex);
+          setIndex(newIndex);
+        }}
+        activeColor="white"
+        inactiveColor="white"
+        activeIndicatorStyle={{ backgroundColor: "#534DB3" }}
+        style={{ backgroundColor: "#534DB3" }}
+      />
+    </View>
   );
 };
 
-export default CBottomNav;
+export default _;

@@ -55,4 +55,4 @@ export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 # ********* npm cache *********
 npm config set cache "$HOME/sgoinfre/.npm-cache"
 
-cd "$HOME/sgoinfre/mobileModule02"
+cd "$HOME/sgoinfre/mobileModule03"

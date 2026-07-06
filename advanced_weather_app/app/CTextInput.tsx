@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Button, TextInput } from "react-native-paper";
-import { GestureResponderEvent } from "react-native";
+import React from "react";
+import { TextInput } from "react-native-paper";
 
 interface Props {
   onBlur: (args: any) => void;
@@ -19,7 +18,7 @@ interface Props {
   style: {};
 }
 
-export default function CTextInput({
+const _ = ({
   onBlur,
   onChangeText,
   label,
@@ -34,7 +33,7 @@ export default function CTextInput({
   selectionColor,
   contentStyle,
   style,
-}: Props) {
+}: Props) => {
   return (
     <TextInput
       onBlur={onBlur}
@@ -52,4 +51,6 @@ export default function CTextInput({
       style={style}
     />
   );
-}
+};
+
+export default _;

@@ -1,6 +1,6 @@
-import { Icon } from "react-native-paper";
-
-const getWeatherCode = (code: Float32Array | number | undefined | null) => {
+export const getWeatherCode = (
+  code: Float32Array | number | undefined | null,
+) => {
   switch (code) {
     case 0:
       return "Clear sky";
@@ -47,8 +47,6 @@ const getWeatherCode = (code: Float32Array | number | undefined | null) => {
       return "Weather code unrecognized.";
   }
 };
-
-export default getWeatherCode;
 
 export const getWeatherIcons = (
   code: Float32Array | number | undefined | null,
