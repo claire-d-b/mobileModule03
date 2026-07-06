@@ -30,7 +30,9 @@ const CurrentData = ({ location, data }: CurrentProps) => {
         color="#534DB3"
         size={40}
       />
-      <Text style={{ color: "#534DB3", fontSize: 25 }}>
+      <Text
+        style={{ color: "#534DB3", fontSize: 25, fontFamily: "Inter-Light" }}
+      >
         {getWeatherCode(data?.current.weather_code)}
       </Text>
       <Text style={{ color: "#534DB3", fontSize: 16, fontWeight: "bold" }}>
