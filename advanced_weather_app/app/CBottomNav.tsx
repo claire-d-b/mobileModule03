@@ -300,16 +300,25 @@ interface Props {
   message: string;
   location: string;
   weatherData: WeatherData | null;
+  index: number;
+  onIndexChange: (i: number) => void;
   style?: {};
 }
 
-const _ = ({ message, location, weatherData, style }: Props) => {
+const _ = ({
+  message,
+  location,
+  weatherData,
+  index,
+  onIndexChange,
+  style,
+}: Props) => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
   const pagerRef = React.useRef<PagerView>(null);
 
   const today = new Date();
-  const [index, setIndex] = React.useState(0);
+  // const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
       key: "currently",
@@ -330,6 +339,15 @@ const _ = ({ message, location, weatherData, style }: Props) => {
       unfocusedIcon: "calendar-week-outline",
     },
   ]);
+
+  const jumpTo = (key: string) => {
+    const newIndex = routes.findIndex((r) => r.key === key);
+    if (newIndex !== -1) {
+      pagerRef.current?.setPageWithoutAnimation(newIndex);
+      onIndexChange(newIndex);
+    }
+  };
+
   const chartConfig = {
     backgroundGradientFrom: "#B6C1D4",
     backgroundGradientFromOpacity: 0.25,
@@ -439,25 +457,23 @@ const _ = ({ message, location, weatherData, style }: Props) => {
       ),
   });
 
+  React.useEffect(() => {
+    // submittingRef.current contient la valeur (ici false au départ).
+    // On peut la lire ou la modifier à tout moment (submittingRef.current = true) — ça ne redéclenche jamais un re-render du composant, contrairement à setState.
+    pagerRef.current?.setPageWithoutAnimation(index);
+  }, [index]);
+
   return (
     <View style={{ flex: 1 }}>
       <PagerView
         ref={pagerRef}
         style={{ flex: 1 }}
-        initialPage={0}
-        onPageSelected={(e) => setIndex(e.nativeEvent.position)}
+        initialPage={index}
+        onPageSelected={(e) => onIndexChange(e.nativeEvent.position)}
       >
         {routes.map((route) => (
           <View key={route.key} style={{ flex: 1 }}>
-            {renderScene({
-              // routes.map(...) sert à transformer le tableau routes (3 objets de configuration d'onglets) en un tableau de composants React — un par onglet — pour que PagerView puisse les afficher côte à côte, dans des "pages" que l'utilisateur peut swiper.
-              route,
-              jumpTo: (key: string) => {
-                const newIndex = routes.findIndex((r) => r.key === key);
-                pagerRef.current?.setPageWithoutAnimation(newIndex);
-                setIndex(newIndex);
-              },
-            })}
+            {renderScene({ route, jumpTo })}
           </View>
         ))}
       </PagerView>
@@ -466,7 +482,7 @@ const _ = ({ message, location, weatherData, style }: Props) => {
         onTabPress={({ route }) => {
           const newIndex = routes.findIndex((r) => r.key === route.key);
           pagerRef.current?.setPageWithoutAnimation(newIndex);
-          setIndex(newIndex);
+          onIndexChange(newIndex);
         }}
         activeColor="white"
         inactiveColor="white"

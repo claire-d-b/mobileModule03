@@ -22,6 +22,8 @@ export default function CAppbar() {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
 
+  const [tabIndex, setTabIndex] = React.useState(0);
+
   const [selectedCoords, setSelectedCoords] = useState<Coordinates | undefined>(
     undefined,
   );
@@ -30,12 +32,27 @@ export default function CAppbar() {
     coords,
     weatherData,
     loading,
+    error: weatherError,
   } = useLocation(selectedCoords);
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [placesList, setPlacesList] = useState<Place[]>([]);
   const [visible, setVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSearchSubmit = () => {
+    if (placesList.length > 0) {
+      const p = placesList[0];
+      setLocation(`${p.name}, ${p.admin1}, ${p.country}`);
+      setSelectedCoords({ latitude: p.latitude, longitude: p.longitude });
+      setErrorMessage("");
+    } else {
+      setLocation("");
+      setSelectedCoords(undefined);
+      setErrorMessage("Location not found.");
+    }
+    setVisible(false);
+  };
 
   useEffect(() => {
     if (detectedAddress && location === "") {
@@ -84,18 +101,19 @@ export default function CAppbar() {
         >
           <Icon source="magnify" color="white" size={20} />
           <CTextInput
-            onBlur={(e: any) => {
-              // setLocation(address);
-              if (!selectedCoords) {
-                setLocation("");
-                setErrorMessage("Location not found.");
-              }
-            }}
+            // onBlur={(e: any) => {
+            //   if (!selectedCoords) {
+            //     setLocation("");
+            //     setErrorMessage("Location not found.");
+            //   }
+            // }}
             onChangeText={(text: string) => {
               setAddress(text);
               setVisible(true);
               setErrorMessage("");
             }}
+            onSubmitEditing={handleSearchSubmit}
+            returnKeyType="search"
             textColor="white"
             label="Location"
             msg={address}
@@ -136,7 +154,7 @@ export default function CAppbar() {
         }}
       >
         {visible && !!placesList.length && (
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
             {placesList.map((p, i) => (
               <View key={`place_${i}`}>
                 <Menu.Item
@@ -165,9 +183,11 @@ export default function CAppbar() {
         )}
         {!visible && (
           <CBottomNav
-            message={errorMessage}
+            message={errorMessage || weatherError}
             location={location}
             weatherData={weatherData}
+            index={tabIndex}
+            onIndexChange={setTabIndex}
           />
         )}
       </View>
