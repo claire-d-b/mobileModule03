@@ -18,10 +18,7 @@ interface Coordinates {
   longitude: number;
 }
 
-export default function CAppbar() {
-  const { width, height } = useWindowDimensions();
-  const isLandscape = width > height;
-
+const _ = () => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   const [selectedCoords, setSelectedCoords] = useState<Coordinates | undefined>(
@@ -63,7 +60,7 @@ export default function CAppbar() {
   useEffect(() => {
     const fetchPlaces = async () => {
       const list = await getPlacesList(address);
-      setPlacesList(list);
+      setPlacesList(list.slice(0, 5));
     };
 
     fetchPlaces();
@@ -193,4 +190,6 @@ export default function CAppbar() {
       </View>
     </View>
   );
-}
+};
+
+export default _;
