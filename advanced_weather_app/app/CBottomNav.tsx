@@ -319,6 +319,7 @@ const _ = ({
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
   const pagerRef = React.useRef<PagerView>(null);
+  const isInternalChange = React.useRef(false);
 
   const today = new Date();
   // const [index, setIndex] = React.useState(0);
@@ -346,6 +347,7 @@ const _ = ({
   const jumpTo = (key: string) => {
     const newIndex = routes.findIndex((r) => r.key === key);
     if (newIndex !== -1) {
+      isInternalChange.current = true;
       pagerRef.current?.setPageWithoutAnimation(newIndex);
       onIndexChange(newIndex);
     }
@@ -457,8 +459,13 @@ const _ = ({
   });
 
   React.useEffect(() => {
-    // submittingRef.current contient la valeur (ici false au départ).
-    // On peut la lire ou la modifier à tout moment (submittingRef.current = true) — ça ne redéclenche jamais un re-render du composant, contrairement à setState.
+    if (isInternalChange.current) {
+      // This index change came from inside this component
+      // (swipe or tab press already moved the pager) — skip.
+      isInternalChange.current = false;
+      return;
+    }
+    // This index change came from outside — move the pager to match.
     pagerRef.current?.setPageWithoutAnimation(index);
   }, [index]);
 
@@ -468,7 +475,10 @@ const _ = ({
         ref={pagerRef}
         style={{ flex: 1 }}
         initialPage={index}
-        onPageSelected={(e) => onIndexChange(e.nativeEvent.position)}
+        onPageSelected={(e) => {
+          isInternalChange.current = true;
+          onIndexChange(e.nativeEvent.position);
+        }}
       >
         {routes.map((route) => (
           <View key={route.key} style={{ flex: 1 }}>
@@ -480,6 +490,7 @@ const _ = ({
         navigationState={{ index, routes }}
         onTabPress={({ route }) => {
           const newIndex = routes.findIndex((r) => r.key === route.key);
+          isInternalChange.current = true;
           pagerRef.current?.setPageWithoutAnimation(newIndex);
           onIndexChange(newIndex);
         }}
