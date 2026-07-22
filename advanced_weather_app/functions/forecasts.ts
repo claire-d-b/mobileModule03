@@ -6,6 +6,7 @@ interface EnsembleParams {
   daily: string[];
   hourly: string[];
   current: string[];
+  past_hours?: number;
 }
 
 export const getForecasts = async ({ ...params }: EnsembleParams) => {

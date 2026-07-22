@@ -179,6 +179,7 @@ const TodayRoute = ({
           hidePointsAtIndex={[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]}
           yAxisSuffix="°C"
           withShadow
+          // xLabelsOffset={10}
           style={{
             display: "flex",
             padding: 20,
@@ -368,18 +369,14 @@ const _ = ({
         wind_speed_10m: weatherData.hourly.wind_speed_10m?.[i],
       }))
       .filter(({ time }) => {
-        const timeUTC = Date.UTC(
-          time.getUTCFullYear(),
-          time.getUTCMonth(),
-          time.getUTCDate(),
+        return (
+          time.getFullYear() === today.getFullYear() &&
+          time.getMonth() === today.getMonth() &&
+          time.getDate() === today.getDate()
         );
-        const todayUTC = Date.UTC(
-          today.getUTCFullYear(),
-          today.getUTCMonth(),
-          today.getUTCDate(),
-        );
-        return timeUTC === todayUTC;
-      }) ?? [];
+      })
+      .sort((a, b) => a.time.getTime() - b.time.getTime()) ?? [];
+
   const weekly =
     weatherData?.daily.time.map((time, i) => ({
       time,

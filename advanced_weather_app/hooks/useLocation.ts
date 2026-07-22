@@ -198,6 +198,7 @@ export const useLocation = (externalCoords?: {
           ],
           hourly: ["temperature_2m", "weather_code", "wind_speed_10m"],
           current: ["temperature_2m", "weather_code", "wind_speed_10m"],
+          past_hours: 24,
         });
         setWeatherData(response);
         setError("");
