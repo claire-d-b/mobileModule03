@@ -86,6 +86,7 @@ const CurrRoute = ({ location, data, isLandscape }: CurrentRouteProps) => (
         alignItems: "center",
         width: "100%",
         paddingHorizontal: 40,
+        paddingBottom: 20,
       }}
     >
       <Icon source="map-marker-outline" color="#534DB3" size={25} />
@@ -146,6 +147,7 @@ const TodayRoute = ({
           alignItems: "center",
           width: "100%",
           paddingHorizontal: 40,
+          paddingBottom: 20,
         }}
       >
         <Icon source="map-marker-outline" color="#534DB3" size={25} />
@@ -173,18 +175,17 @@ const TodayRoute = ({
             ],
           }}
           chartConfig={chartConfig}
-          width={Dimensions.get("window").width - 60}
+          width={Dimensions.get("window").width}
           height={220}
           withDots={false}
           hidePointsAtIndex={[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]}
           yAxisSuffix="°C"
           withShadow
-          // xLabelsOffset={10}
-          style={{
-            display: "flex",
-            padding: 20,
-            borderRadius: 16,
-          }}
+          // style={{
+          //   display: "flex",
+          //   padding: 20,
+          //   borderRadius: 16,
+          // }}
         />
       </View>
       <HourlyData hourly={todayHourly} />
@@ -243,6 +244,7 @@ const WeeklyRoute = ({
           alignItems: "center",
           width: "100%",
           paddingHorizontal: 40,
+          paddingBottom: 20,
         }}
       >
         <Icon source="map-marker-outline" color="#534DB3" size={25} />
@@ -280,16 +282,16 @@ const WeeklyRoute = ({
             ],
           }}
           chartConfig={chartConfig}
-          width={Dimensions.get("window").width - 60}
+          width={Dimensions.get("window").width}
           height={220}
           withDots={false}
           yAxisSuffix="°C"
           withShadow
-          style={{
-            display: "flex",
-            padding: 20,
-            borderRadius: 16,
-          }}
+          // style={{
+          //   display: "flex",
+          //   padding: 20,
+          //   borderRadius: 16,
+          // }}
         />
       </View>
     </View>
