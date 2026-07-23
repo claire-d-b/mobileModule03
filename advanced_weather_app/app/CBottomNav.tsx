@@ -11,7 +11,6 @@ import HourlyData from "./Hourly";
 import DailyData from "./Daily";
 import CurrentData from "./Current";
 import CChip from "./CChip";
-import CLoading from "./CLoading";
 import { WeatherData } from "../hooks/useLocation";
 import PagerView from "react-native-pager-view";
 
@@ -186,11 +185,6 @@ const TodayRoute = ({
             hidePointsAtIndex={[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]}
             yAxisSuffix="°C"
             withShadow
-            // style={{
-            //   display: "flex",
-            //   padding: 20,
-            //   borderRadius: 16,
-            // }}
           />
         </View>
         <HourlyData hourly={todayHourly} />
@@ -293,11 +287,6 @@ const WeeklyRoute = ({
             withDots={false}
             yAxisSuffix="°C"
             withShadow
-            // style={{
-            //   display: "flex",
-            //   padding: 20,
-            //   borderRadius: 16,
-            // }}
           />
         </View>
       </View>
@@ -328,7 +317,6 @@ const _ = ({
   const isInternalChange = React.useRef(false);
 
   const today = new Date();
-  // const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
       key: "currently",

@@ -12,8 +12,6 @@ interface HourlyProps {
     weather_code: number | undefined;
     wind_speed_10m: number | undefined;
   }[];
-  // progress: number;
-  // onProgressChange?: (progress: number) => void;
 }
 
 const HourlyData = ({ hourly }: HourlyProps) => {
@@ -60,7 +58,6 @@ const HourlyData = ({ hourly }: HourlyProps) => {
                   {h.wind_speed_10m?.toFixed(1)}km/h
                 </Text>
               </View>
-              {/* <Text>{truncate(getWeatherCode(h.weather_code), 10)}</Text> */}
               <Icon
                 source={getWeatherIcons(h.weather_code)}
                 color="#534DB3"

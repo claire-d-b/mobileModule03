@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, useWindowDimensions, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Appbar, Text, IconButton, Icon, Menu } from "react-native-paper";
 import CTextInput from "./CTextInput";
 import CBottomNav from "./CBottomNav";
@@ -104,12 +104,6 @@ const _ = () => {
         >
           <Icon source="magnify" color="white" size={20} />
           <CTextInput
-            // onBlur={(e: any) => {
-            //   if (!selectedCoords) {
-            //     setLocation("");
-            //     setErrorMessage("Location not found.");
-            //   }
-            // }}
             onChangeText={(text: string) => {
               setAddress(text);
               setVisible(true);
