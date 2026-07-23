@@ -13,46 +13,49 @@ interface CurrentProps {
 
 const CurrentData = ({ location, data }: CurrentProps) => {
   return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 20,
-        gap: 10,
-        width: "100%",
-        backgroundColor: "transparent",
-      }}
-    >
-      <Icon
-        source={getWeatherIcons(data?.current.weather_code)}
-        color="#534DB3"
-        size={40}
-      />
-      <Text
-        style={{ color: "#534DB3", fontSize: 25, fontFamily: "Inter-Light" }}
-      >
-        {getWeatherCode(data?.current.weather_code)}
-      </Text>
-      <Text style={{ color: "#534DB3", fontSize: 16, fontWeight: "bold" }}>
-        {data?.current?.temperature_2m?.toFixed(1)}°C
-      </Text>
+    location &&
+    data && (
       <View
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          padding: 20,
+          gap: 10,
+          width: "100%",
           backgroundColor: "transparent",
         }}
       >
-        <Icon source="weather-windy" size={15} color="gray"></Icon>
-        <Text style={{ color: "gray" }}>
-          {data?.current?.wind_speed_10m?.toFixed(1)}km/h
+        <Icon
+          source={getWeatherIcons(data?.current.weather_code)}
+          color="#534DB3"
+          size={40}
+        />
+        <Text
+          style={{ color: "#534DB3", fontSize: 25, fontFamily: "Inter-Light" }}
+        >
+          {getWeatherCode(data?.current.weather_code)}
         </Text>
+        <Text style={{ color: "#534DB3", fontSize: 16, fontWeight: "bold" }}>
+          {data?.current?.temperature_2m?.toFixed(1)}°C
+        </Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "transparent",
+          }}
+        >
+          <Icon source="weather-windy" size={15} color="gray"></Icon>
+          <Text style={{ color: "gray" }}>
+            {data?.current?.wind_speed_10m?.toFixed(1)}km/h
+          </Text>
+        </View>
       </View>
-    </View>
+    )
   );
 };
 

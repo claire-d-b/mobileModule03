@@ -49,256 +49,261 @@ interface WeeklyRouteProps {
   isLandscape: boolean;
 }
 
-const CurrRoute = ({ location, data, isLandscape }: CurrentRouteProps) => (
-  <ScrollView
-    style={{ width: "100%", backgroundColor: "transparent" }}
-    contentContainerStyle={{
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 20,
-      paddingTop: 20,
-      paddingBottom: 20,
-    }}
-  >
-    <CChip
-      mode="outlined"
-      onPress={() => {}}
-      label="Weekly"
-      textStyle={{}}
-      style={{
-        borderColor: "#534DB3", // ← directement dans style
-        borderWidth: 1,
-      }}
-      icon=""
-      disabled={true}
-    >
-      <Text style={{ color: "#534DB3" }}>Currently</Text>
-    </CChip>
-    {isLandscape && (
-      <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
-        Scroll down to display weather information.
-      </Text>
-    )}
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-start",
+const CurrRoute = ({ location, data, isLandscape }: CurrentRouteProps) =>
+  location && (
+    <ScrollView
+      style={{ width: "100%", backgroundColor: "transparent" }}
+      contentContainerStyle={{
         alignItems: "center",
-        width: "100%",
-        paddingHorizontal: 40,
+        justifyContent: "center",
+        gap: 20,
+        paddingTop: 20,
         paddingBottom: 20,
       }}
     >
-      <Icon source="map-marker-outline" color="#534DB3" size={25} />
-      <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
-    </View>
-    <CurrentData location={location} data={data} />
-  </ScrollView>
-);
+      <CChip
+        mode="outlined"
+        onPress={() => {}}
+        label="Weekly"
+        textStyle={{}}
+        style={{
+          borderColor: "#534DB3", // ← directement dans style
+          borderWidth: 1,
+        }}
+        icon=""
+        disabled={true}
+      >
+        <Text style={{ color: "#534DB3" }}>Currently</Text>
+      </CChip>
+      {isLandscape && (
+        <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
+          Scroll down to display weather information.
+        </Text>
+      )}
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+          paddingHorizontal: 40,
+          paddingBottom: 20,
+        }}
+      >
+        <Icon source="map-marker-outline" color="#534DB3" size={25} />
+        <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
+      </View>
+      <CurrentData location={location} data={data} />
+    </ScrollView>
+  );
 
 const TodayRoute = ({
   location,
   todayHourly,
   chartConfig,
   isLandscape,
-}: TodayRouteProps) => (
-  <ScrollView
-    style={{ width: "100%", backgroundColor: "transparent" }}
-    contentContainerStyle={{
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 20,
-      paddingTop: 20,
-      paddingBottom: 20,
-    }}
-  >
-    <CChip
-      mode="outlined"
-      onPress={() => {}}
-      label="Weekly"
-      textStyle={{}}
-      style={{
-        borderColor: "#534DB3", // ← directement dans style
-        borderWidth: 1,
-      }}
-      icon=""
-      disabled={true}
-    >
-      <Text style={{ color: "#534DB3" }}>Today</Text>
-    </CChip>
-    {isLandscape && (
-      <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
-        Scroll down to display weather information.
-      </Text>
-    )}
-    <View
-      style={{
-        display: "flex",
-        width: "100%",
-        overflow: "scroll",
-        backgroundColor: "transparent",
+}: TodayRouteProps) =>
+  location && (
+    <ScrollView
+      style={{ width: "100%", backgroundColor: "transparent" }}
+      contentContainerStyle={{
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
       }}
     >
-      <View
+      <CChip
+        mode="outlined"
+        onPress={() => {}}
+        label="Weekly"
+        textStyle={{}}
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          width: "100%",
-          paddingHorizontal: 40,
-          paddingBottom: 20,
+          borderColor: "#534DB3", // ← directement dans style
+          borderWidth: 1,
         }}
+        icon=""
+        disabled={true}
       >
-        <Icon source="map-marker-outline" color="#534DB3" size={25} />
-        <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
-      </View>
+        <Text style={{ color: "#534DB3" }}>Today</Text>
+      </CChip>
+      {isLandscape && (
+        <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
+          Scroll down to display weather information.
+        </Text>
+      )}
       <View
         style={{
           display: "flex",
           width: "100%",
-          borderRadius: 20,
-          justifyContent: "center",
-          alignItems: "center",
+          overflow: "scroll",
           backgroundColor: "transparent",
         }}
       >
-        <LineChart
-          data={{
-            labels: todayHourly.map((h) => `${h.time.getHours().toString()}h`),
-            datasets: [
-              {
-                data: todayHourly.map((h) => h.temperature_2m ?? 0),
-                color: (opacity = 1) => `rgba(83, 77, 179, ${opacity + 0.5})`,
-                strokeWidth: 2,
-              },
-            ],
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            width: "100%",
+            paddingHorizontal: 40,
+            paddingBottom: 20,
           }}
-          chartConfig={chartConfig}
-          width={Dimensions.get("window").width}
-          height={220}
-          withDots={false}
-          hidePointsAtIndex={[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]}
-          yAxisSuffix="°C"
-          withShadow
-          // style={{
-          //   display: "flex",
-          //   padding: 20,
-          //   borderRadius: 16,
-          // }}
-        />
+        >
+          <Icon source="map-marker-outline" color="#534DB3" size={25} />
+          <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
+        </View>
+        <View
+          style={{
+            display: "flex",
+            width: "100%",
+            borderRadius: 20,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "transparent",
+          }}
+        >
+          <LineChart
+            data={{
+              labels: todayHourly.map(
+                (h) => `${h.time.getHours().toString()}h`,
+              ),
+              datasets: [
+                {
+                  data: todayHourly.map((h) => h.temperature_2m ?? 0),
+                  color: (opacity = 1) => `rgba(83, 77, 179, ${opacity + 0.5})`,
+                  strokeWidth: 2,
+                },
+              ],
+            }}
+            chartConfig={chartConfig}
+            width={Dimensions.get("window").width}
+            height={220}
+            withDots={false}
+            hidePointsAtIndex={[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]}
+            yAxisSuffix="°C"
+            withShadow
+            // style={{
+            //   display: "flex",
+            //   padding: 20,
+            //   borderRadius: 16,
+            // }}
+          />
+        </View>
+        <HourlyData hourly={todayHourly} />
       </View>
-      <HourlyData hourly={todayHourly} />
-    </View>
-  </ScrollView>
-);
+    </ScrollView>
+  );
 
 const WeeklyRoute = ({
   location,
   weekly,
   chartConfig,
   isLandscape,
-}: WeeklyRouteProps) => (
-  <ScrollView
-    style={{ width: "100%", backgroundColor: "transparent" }}
-    contentContainerStyle={{
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 20,
-      paddingTop: 20,
-      paddingBottom: 20,
-    }}
-  >
-    <CChip
-      mode="outlined"
-      onPress={() => {}}
-      label="Weekly"
-      textStyle={{}}
-      style={{
-        borderColor: "#534DB3", // ← directement dans style
-        borderWidth: 1,
-      }}
-      icon=""
-      disabled={true}
-    >
-      <Text style={{ color: "#534DB3" }}>Weekly</Text>
-    </CChip>
-    {isLandscape && (
-      <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
-        Scroll down to display weather information.
-      </Text>
-    )}
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+}: WeeklyRouteProps) =>
+  location && (
+    <ScrollView
+      style={{ width: "100%", backgroundColor: "transparent" }}
+      contentContainerStyle={{
         alignItems: "center",
+        justifyContent: "center",
+        gap: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
       }}
     >
-      <View
+      <CChip
+        mode="outlined"
+        onPress={() => {}}
+        label="Weekly"
+        textStyle={{}}
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          width: "100%",
-          paddingHorizontal: 40,
-          paddingBottom: 20,
+          borderColor: "#534DB3", // ← directement dans style
+          borderWidth: 1,
         }}
+        icon=""
+        disabled={true}
       >
-        <Icon source="map-marker-outline" color="#534DB3" size={25} />
-        <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
-      </View>
+        <Text style={{ color: "#534DB3" }}>Weekly</Text>
+      </CChip>
+      {isLandscape && (
+        <Text style={{ color: "#534DB3", fontFamily: "Inter-Light" }}>
+          Scroll down to display weather information.
+        </Text>
+      )}
       <View
         style={{
           display: "flex",
-          width: "100%",
-          borderRadius: 20,
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "transparent",
         }}
       >
-        <LineChart
-          data={{
-            labels: weekly.map((w) =>
-              w.time.toLocaleDateString("fr-FR", {
-                day: "numeric",
-                month: "numeric",
-              }),
-            ),
-            datasets: [
-              {
-                data: weekly.map((w) => w.temperature_2m_min ?? 0),
-                color: (opacity = 1) => `rgba(163, 39, 61, ${opacity + 0.5})`,
-                strokeWidth: 2,
-              },
-              {
-                data: weekly.map((w) => w.temperature_2m_max ?? 0),
-                color: (opacity = 1) => `rgba(60, 94, 166, ${opacity + 0.5})`,
-                strokeWidth: 2,
-              },
-            ],
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            width: "100%",
+            paddingHorizontal: 40,
+            paddingBottom: 20,
           }}
-          chartConfig={chartConfig}
-          width={Dimensions.get("window").width}
-          height={220}
-          withDots={false}
-          yAxisSuffix="°C"
-          withShadow
-          // style={{
-          //   display: "flex",
-          //   padding: 20,
-          //   borderRadius: 16,
-          // }}
-        />
+        >
+          <Icon source="map-marker-outline" color="#534DB3" size={25} />
+          <Text style={{ color: "#534DB3", paddingLeft: 15 }}>{location}</Text>
+        </View>
+        <View
+          style={{
+            display: "flex",
+            width: "100%",
+            borderRadius: 20,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "transparent",
+          }}
+        >
+          <LineChart
+            data={{
+              labels: weekly.map((w) =>
+                w.time.toLocaleDateString("fr-FR", {
+                  day: "numeric",
+                  month: "numeric",
+                }),
+              ),
+              datasets: [
+                {
+                  data: weekly.map((w) => w.temperature_2m_min ?? 0),
+                  color: (opacity = 1) => `rgba(163, 39, 61, ${opacity + 0.5})`,
+                  strokeWidth: 2,
+                },
+                {
+                  data: weekly.map((w) => w.temperature_2m_max ?? 0),
+                  color: (opacity = 1) => `rgba(60, 94, 166, ${opacity + 0.5})`,
+                  strokeWidth: 2,
+                },
+              ],
+            }}
+            chartConfig={chartConfig}
+            width={Dimensions.get("window").width}
+            height={220}
+            withDots={false}
+            yAxisSuffix="°C"
+            withShadow
+            // style={{
+            //   display: "flex",
+            //   padding: 20,
+            //   borderRadius: 16,
+            // }}
+          />
+        </View>
       </View>
-    </View>
-    <DailyData weekly={weekly} />
-  </ScrollView>
-);
+      <DailyData weekly={weekly} />
+    </ScrollView>
+  );
 
 interface Props {
   message: string;
