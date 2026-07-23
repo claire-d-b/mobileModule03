@@ -277,12 +277,12 @@ const WeeklyRoute = ({
               datasets: [
                 {
                   data: weekly.map((w) => w.temperature_2m_min ?? 0),
-                  color: (opacity = 1) => `rgba(163, 39, 61, ${opacity + 0.5})`,
+                  color: (opacity = 1) => `rgba(60, 94, 166, ${opacity + 0.5})`,
                   strokeWidth: 2,
                 },
                 {
                   data: weekly.map((w) => w.temperature_2m_max ?? 0),
-                  color: (opacity = 1) => `rgba(60, 94, 166, ${opacity + 0.5})`,
+                  color: (opacity = 1) => `rgba(163, 39, 61, ${opacity + 0.5})`,
                   strokeWidth: 2,
                 },
               ],

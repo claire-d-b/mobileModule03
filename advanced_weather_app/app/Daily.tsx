@@ -47,10 +47,10 @@ const DailyData = ({ weekly }: DailyProps) => {
                   month: "numeric",
                 })}
               </Text>
-              <Text style={{ color: "#A3273D" }}>
+              <Text style={{ color: "#3C5EA6" }}>
                 {w.temperature_2m_min?.toFixed(1)}°C
               </Text>
-              <Text style={{ color: "#3C5EA6" }}>
+              <Text style={{ color: "#A3273D" }}>
                 {w.temperature_2m_max?.toFixed(1)}°C
               </Text>
               <Icon
