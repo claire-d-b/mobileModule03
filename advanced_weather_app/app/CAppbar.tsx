@@ -3,6 +3,7 @@ import { View, useWindowDimensions, ScrollView } from "react-native";
 import { Appbar, Text, IconButton, Icon, Menu } from "react-native-paper";
 import CTextInput from "./CTextInput";
 import CBottomNav from "./CBottomNav";
+import CLoading from "./CLoading";
 import { useLocation, getPlacesList } from "../hooks/useLocation";
 
 interface Place {
@@ -31,6 +32,7 @@ const _ = () => {
     loading,
     error: weatherError,
   } = useLocation(selectedCoords);
+
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [placesList, setPlacesList] = useState<Place[]>([]);
@@ -65,6 +67,10 @@ const _ = () => {
 
     fetchPlaces();
   }, [address]);
+
+  if (loading) {
+    return <CLoading />;
+  }
 
   return (
     <View

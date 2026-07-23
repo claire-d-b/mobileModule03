@@ -219,6 +219,7 @@ export const useLocation = (externalCoords?: {
       const granted = await requestPermission();
       if (!granted) {
         setLoading(false);
+        setError("Please allow GPS.");
         return;
       }
 

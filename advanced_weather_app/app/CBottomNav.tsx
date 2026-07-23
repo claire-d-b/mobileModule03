@@ -11,6 +11,7 @@ import HourlyData from "./Hourly";
 import DailyData from "./Daily";
 import CurrentData from "./Current";
 import CChip from "./CChip";
+import CLoading from "./CLoading";
 import { WeatherData } from "../hooks/useLocation";
 import PagerView from "react-native-pager-view";
 
