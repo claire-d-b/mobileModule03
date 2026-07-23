@@ -135,9 +135,14 @@ const _ = () => {
           iconColor="white"
           size={20}
           onPress={() => {
-            setLocation(detectedAddress);
-            setSelectedCoords(undefined);
-            setErrorMessage("");
+            console.log("address", detectedAddress);
+            if (!detectedAddress) {
+              setErrorMessage("Please allow GPS.");
+            } else {
+              setLocation(detectedAddress);
+              setSelectedCoords(undefined);
+              setErrorMessage("");
+            }
             setVisible(false);
           }}
           style={{ transform: "rotate(45deg);" }}
