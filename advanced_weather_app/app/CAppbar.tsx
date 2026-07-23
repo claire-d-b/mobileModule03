@@ -135,7 +135,6 @@ const _ = () => {
           iconColor="white"
           size={20}
           onPress={() => {
-            console.log("address", detectedAddress);
             if (!detectedAddress) {
               setErrorMessage("Please allow GPS.");
             } else {
