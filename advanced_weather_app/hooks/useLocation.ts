@@ -125,20 +125,25 @@ export const getLocationName = async (
     return null;
   // Reverse geocode a location to postal address.
   // On Android, you must request location permissions with requestForegroundPermissionsAsync before geocoding can be used.
-  const [place] = await Location.reverseGeocodeAsync({
-    latitude: coords.latitude,
-    longitude: coords.longitude,
-  });
-  if (!place) return null;
-  return [
-    place.streetNumber,
-    place.street,
-    place.city,
-    place.region,
-    place.country,
-  ]
-    .filter(Boolean) // .filter(Boolean) supprime les valeurs falsy du tableau avant de les joindre. Valeurs falsy = undefined, null, "", 0, false, NaN.
-    .join(", ");
+  try {
+    const [place] = await Location.reverseGeocodeAsync({
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    });
+    if (!place) return null;
+    return [
+      place.streetNumber,
+      place.street,
+      place.city,
+      place.region,
+      place.country,
+    ]
+      .filter(Boolean) // .filter(Boolean) supprime les valeurs falsy du tableau avant de les joindre. Valeurs falsy = undefined, null, "", 0, false, NaN.
+      .join(", ");
+  } catch (e) {
+    console.warn("Reverse geocoding failed:", e);
+    return null;
+  }
 };
 
 export const getPlacesList = async (location: string) => {
@@ -261,6 +266,5 @@ export const useLocation = (externalCoords?: {
     return () => unsubscribe();
   }, []);
 
-  // console.log(weatherData);
   return { address, coords: activeCoords, weatherData, loading, error };
 };

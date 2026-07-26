@@ -66,7 +66,7 @@ const CurrRoute = ({ location, data, isLandscape }: CurrentRouteProps) =>
         label="Weekly"
         textStyle={{}}
         style={{
-          borderColor: "#534DB3", // ← directement dans style
+          borderColor: "#534DB3",
           borderWidth: 1,
         }}
         icon=""
@@ -120,7 +120,7 @@ const TodayRoute = ({
         label="Weekly"
         textStyle={{}}
         style={{
-          borderColor: "#534DB3", // ← directement dans style
+          borderColor: "#534DB3",
           borderWidth: 1,
         }}
         icon=""
@@ -215,7 +215,7 @@ const WeeklyRoute = ({
         label="Weekly"
         textStyle={{}}
         style={{
-          borderColor: "#534DB3", // ← directement dans style
+          borderColor: "#534DB3",
           borderWidth: 1,
         }}
         icon=""
@@ -314,7 +314,6 @@ const _ = ({
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
   const pagerRef = React.useRef<PagerView>(null);
-  const isInternalChange = React.useRef(false);
 
   const today = new Date();
   const [routes] = React.useState([
@@ -341,7 +340,6 @@ const _ = ({
   const jumpTo = (key: string) => {
     const newIndex = routes.findIndex((r) => r.key === key);
     if (newIndex !== -1) {
-      isInternalChange.current = true;
       pagerRef.current?.setPageWithoutAnimation(newIndex);
       onIndexChange(newIndex);
     }
@@ -353,8 +351,8 @@ const _ = ({
     backgroundGradientTo: "#B6C1D4",
     backgroundGradientToOpacity: 0.25,
     color: (opacity = 1) => `rgba(60, 76, 103, ${opacity + 0.5})`,
-    strokeWidth: 2, // optional, default 3
-    useShadowColorFromDataset: false, // optional
+    strokeWidth: 2,
+    useShadowColorFromDataset: false,
     decimalPlaces: 1,
   };
 
@@ -452,17 +450,6 @@ const _ = ({
       ),
   });
 
-  React.useEffect(() => {
-    if (isInternalChange.current) {
-      // This index change came from inside this component
-      // (swipe or tab press already moved the pager) — skip.
-      isInternalChange.current = false;
-      return;
-    }
-    // This index change came from outside — move the pager to match.
-    pagerRef.current?.setPageWithoutAnimation(index);
-  }, [index]);
-
   return (
     <View style={{ flex: 1 }}>
       <PagerView
@@ -470,7 +457,6 @@ const _ = ({
         style={{ flex: 1 }}
         initialPage={index}
         onPageSelected={(e) => {
-          isInternalChange.current = true;
           onIndexChange(e.nativeEvent.position);
         }}
       >
@@ -484,7 +470,6 @@ const _ = ({
         navigationState={{ index, routes }}
         onTabPress={({ route }) => {
           const newIndex = routes.findIndex((r) => r.key === route.key);
-          isInternalChange.current = true;
           pagerRef.current?.setPageWithoutAnimation(newIndex);
           onIndexChange(newIndex);
         }}
